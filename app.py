@@ -2,8 +2,8 @@
 # -- Import section --
 from flask import Flask
 from flask import render_template
-# from flask import request
-
+from flask import request
+from model import pokemon_choice_message
 
 # -- Initialization section --
 app = Flask(__name__)
@@ -24,10 +24,13 @@ def index():
 def secret():
     return "yo wasssupp"
 
-@app.route('/resultspage')
+@app.route('/resultspage', methods = ['GET', 'POST'])
 def resultspage():
-    dessert = {
-        'dessert': 'pie'
-    }
-    return render_template('resultspage.html', foods = dessert)
+    print(request.form['pokemon'])
+    # dessert = {
+    #     'dessert': 'pie'
+    # }
+    user_choice = request.form['pokemon']
+    message = pokemon_choice_message(user_choice)
+    return render_template('resultspage.html', message = message)
 
